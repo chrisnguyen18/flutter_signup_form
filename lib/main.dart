@@ -132,10 +132,12 @@ class _SignupPageState extends State<SignupPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Welcome! Account created successfully.'),
-                        backgroundColor: Colors.green,
+                    // Navigate to Welcome screen with the user's name 
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => WelcomePage(
+                          name: _nameController.text.trim(),
+                        ),
                       ),
                     );
                   }
@@ -151,6 +153,28 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+// Simple welcome screen 
+class WelcomePage extends StatelessWidget {
+  final String name;
+  const WelcomePage({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome'),
+        backgroundColor: Colors.purple,
+      ),
+      body: Center(
+        child: Text(
+          'Welcome, $name!',
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
     );
